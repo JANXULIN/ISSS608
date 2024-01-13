@@ -23,13 +23,3 @@ The code chunk used is as follows:
 ```{r}
 pacman::p_load(tidyverse, haven)
 ```
-
-
-
-
-
-
-
-
-
-
