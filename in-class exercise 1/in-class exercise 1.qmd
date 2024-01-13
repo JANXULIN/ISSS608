@@ -1,0 +1,35 @@
+---
+title: "in-class exercise 1: Now You Can See It!"
+author: "Xu Lin"
+date: "January 13, 2024"
+date-modified: "last-modified"
+execute: 
+  eval: true
+  echo: true
+  warning: false
+editor: visual
+---
+
+## Loading R packages
+
+In this hands-on exercise, two R packages will be used. They are:
+
+-   [Tidyverse](https://www.tidyverse.org/)
+
+-   [haven](https://www.tidyverse.org/)
+
+The code chunk used is as follows:
+
+```{r}
+pacman::p_load(tidyverse, haven)
+```
+
+
+
+
+
+
+
+
+
+
