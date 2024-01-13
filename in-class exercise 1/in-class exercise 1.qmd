@@ -23,3 +23,39 @@ The code chunk used is as follows:
 ```{r}
 pacman::p_load(tidyverse, haven)
 ```
+
+```{r}
+#| eval: false
+stu.qqq <- read_sas("data/cy08msp_stu_qqq.format.sas")
+```
+
+```{r}
+#| eval: false
+stu_qqq_SG <- stu.qqq %>%
+  filter(CNT == "SGP")
+```
+
+```{r}
+#| eval: false
+write_rds(stu_qqq_SG,
+          "data/stu_qqq_SG.rds")
+```
+
+```{r}
+#| eval: false
+stu_qqq_SG <- read_rds("data/stu_qqq_SG.rds")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
