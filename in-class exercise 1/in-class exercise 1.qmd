@@ -45,17 +45,3 @@ write_rds(stu_qqq_SG,
 #| eval: false
 stu_qqq_SG <- read_rds("data/stu_qqq_SG.rds")
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
