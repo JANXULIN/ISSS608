@@ -51,6 +51,8 @@ ggplot(data=exam_data,
   ggtitle("English scores versus Maths scores for Primary 3")
 ```
 
+## Expalintation: "ggrepel" is designed to address the issue of overlapping between labels in charts and graphics. It automatically adjusts the positions of text labels to prevent overlap, thereby enhancing the clarity and readability of the graphics.
+
 ```{r}
 ggplot(data=exam_data, 
              aes(x = MATHS)) +
@@ -72,6 +74,8 @@ ggplot(data=exam_data,
   ggtitle("Distribution of Maths scores") +
   theme_economist()
 ```
+
+## Explaination:"Themes" are about styling and mainly help in enhancing the overall appearance of charts, making them more readable and aesthetically pleasing.
 
 ```{r}
 ggplot(data=exam_data, 
@@ -96,6 +100,8 @@ ggplot(data=exam_data,
               base_size = 15,
               grid = "Y")
 ```
+
+## Explaination: The 'hrbrthemes' package in R primarily provides additional themes and styles, offering tools for customization and beautification
 
 ```{r}
 p1 <- ggplot(data=exam_data, 
@@ -153,6 +159,8 @@ ggplot(data=exam_data,
               base_size = 15,
               grid = "Y")
 ```
+
+## Explaination: In R, a 'Single Graph' primarily refers to an independent chart, mainly used for displaying specific data or handling data relationships.
 
 ```{r}
 p1 <- ggplot(data=exam_data, 
@@ -188,12 +196,33 @@ p3 <- ggplot(data=exam_data,
   ggtitle("English scores versus Maths scores for Primary 3")
 ```
 
+```{r}
+p1 + p2
+```
 
+```{r}
+(p1 / p2) | p3
+```
 
+```{r}
+((p1 / p2) | p3) + 
+  plot_annotation(tag_levels = 'I')
+```
 
+```{r}
+p3 + inset_element(p2, 
+                   left = 0.02, 
+                   bottom = 0.7, 
+                   right = 0.5, 
+                   top = 1)
+```
 
+```{r}
+patchwork <- (p1 / p2) | p3
+patchwork & theme_economist()
+```
 
-
+## Expalination: In R, 'patchwork methods' combine multiple charts, offer flexible layout control, simplify the process of chart combination, and allow for high customization.
 
 
 
