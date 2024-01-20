@@ -22,6 +22,11 @@ pacman::p_load(ggrepel, patchwork,
 exam_data <- read_csv("data/Exam_data.csv")
 ```
 
+::: panel-tabset
+## the plot
+
+## code chunk
+
 ```{r}
 ggplot(data=exam_data, 
        aes(x= MATHS, 
@@ -36,6 +41,7 @@ ggplot(data=exam_data,
                   ylim=c(0,100)) +
   ggtitle("English scores versus Maths scores for Primary 3")
 ```
+:::
 
 ```{r}
 ggplot(data=exam_data, 
@@ -223,8 +229,3 @@ patchwork & theme_economist()
 ```
 
 ## Expalination: In R, 'patchwork methods' combine multiple charts, offer flexible layout control, simplify the process of chart combination, and allow for high customization.
-
-
-
-
-
