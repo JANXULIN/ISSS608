@@ -227,6 +227,27 @@ school_averages_long <- school_averages %>%
 ```
 
 ```{r}
+p10 <- ggplot(school_averages_long, aes(x = Subject, y = Average_Score, fill = Subject)) +
+  geom_boxplot() +
+  geom_point(aes(color = Subject), position = position_jitter(width = 0.2), alpha = 0.5) +
+  labs(title = "Points of Average Scores by Subject in School ID",
+       x = "Subject",
+       y = "Average Score") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+p10 + geom_text(data = school_averages_long %>% group_by(Subject) %>% 
+  mutate(is_outlier = ifelse(Average_Score < quantile(Average_Score, 0.25) - 1.5 * IQR(Average_Score) | 
+                             Average_Score > quantile(Average_Score, 0.75) + 1.5 * IQR(Average_Score), TRUE, FALSE)) %>%
+  ungroup() %>% 
+  filter(is_outlier), 
+  aes(label = CNTSCHID), 
+  na.rm = TRUE, 
+  vjust = -1.5, 
+  check_overlap = TRUE, 
+  size = 3)
+```
+
+```{r}
 ggplot(school_averages_long, aes(x = CNTSCHID, y = Average_Score, color = Subject)) +
   geom_point() +
   geom_text(aes(label = Label), na.rm = TRUE, vjust = 0.5, hjust = 0.5, check_overlap = FALSE, size = 3) +  
