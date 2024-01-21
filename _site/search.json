@@ -137,6 +137,13 @@
     "href": "take home exercise 1/take home exercise 1.html#summary-3",
     "title": "take home exercise 1",
     "section": "Summary:",
+    "text": "Summary:\nFrom this chart, it is apparent that math scores are higher than those for reading and science, with reading being the lowest of the three. We can also observe that the schools with IDs 70200003, 70200001, 70200101, 70200044 have relatively high average scores. Meanwhile, the schools with IDs 70200115 and 70200149 have the lowest scores across all three subjects, and it is necessary to investigate the reasons behind this.\n\nggplot(school_averages_long, aes(x = CNTSCHID, y = Average_Score, color = Subject)) +\n  geom_point() +\n  geom_text(aes(label = Label), na.rm = TRUE, vjust = 0.5, hjust = 0.5, check_overlap = FALSE, size = 3) +  \n  theme(\n    axis.text.x = element_text(angle = 90, hjust = 1),\n    plot.margin = margin(t = 30, r = 30, b = 30, l = 30, unit = \"pt\") \n  ) +\n  labs(title = \"Average Scores per School by Subject\",\n       x = \"School ID\",\n       y = \"Average Score\")"
+  },
+  {
+    "objectID": "take home exercise 1/take home exercise 1.html#summary-4",
+    "href": "take home exercise 1/take home exercise 1.html#summary-4",
+    "title": "take home exercise 1",
+    "section": "Summary:",
     "text": "Summary:\nMost schools’ scores range between 500 and 700. However, some schools achieve higher scores, such as 70200003 and 70200001, while others, such as 70200115 and 70200149, have lower scores. According to the chart, math scores are significantly better than reading scores."
   }
 ]

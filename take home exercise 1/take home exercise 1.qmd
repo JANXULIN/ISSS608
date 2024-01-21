@@ -247,6 +247,9 @@ p10 + geom_text(data = school_averages_long %>% group_by(Subject) %>%
   size = 3)
 ```
 
+## Summary: 
+From this chart, it is apparent that math scores are higher than those for reading and science, with reading being the lowest of the three. We can also observe that the schools with IDs 70200003, 70200001, 70200101, 70200044 have relatively high average scores. Meanwhile, the schools with IDs 70200115 and 70200149 have the lowest scores across all three subjects, and it is necessary to investigate the reasons behind this.
+
 ```{r}
 ggplot(school_averages_long, aes(x = CNTSCHID, y = Average_Score, color = Subject)) +
   geom_point() +

@@ -237,6 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#schools" id="toc-schools" class="nav-link" data-scroll-target="#schools">Schools</a>
   <ul class="collapse">
   <li><a href="#summary-3" id="toc-summary-3" class="nav-link" data-scroll-target="#summary-3">Summary:</a></li>
+  <li><a href="#summary-4" id="toc-summary-4" class="nav-link" data-scroll-target="#summary-4">Summary:</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -525,6 +526,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="take-home-exercise-1_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<section id="summary-3" class="level2">
+<h2 class="anchored" data-anchor-id="summary-3">Summary:</h2>
+<p>From this chart, it is apparent that math scores are higher than those for reading and science, with reading being the lowest of the three. We can also observe that the schools with IDs 70200003, 70200001, 70200101, 70200044 have relatively high average scores. Meanwhile, the schools with IDs 70200115 and 70200149 have the lowest scores across all three subjects, and it is necessary to investigate the reasons behind this.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(school_averages_long, <span class="fu">aes</span>(<span class="at">x =</span> CNTSCHID, <span class="at">y =</span> Average_Score, <span class="at">color =</span> Subject)) <span class="sc">+</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
@@ -540,8 +544,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="take-home-exercise-1_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<section id="summary-3" class="level2">
-<h2 class="anchored" data-anchor-id="summary-3">Summary:</h2>
+</section>
+<section id="summary-4" class="level2">
+<h2 class="anchored" data-anchor-id="summary-4">Summary:</h2>
 <p>Most schools’ scores range between 500 and 700. However, some schools achieve higher scores, such as 70200003 and 70200001, while others, such as 70200115 and 70200149, have lower scores. According to the chart, math scores are significantly better than reading scores.</p>
 
 
