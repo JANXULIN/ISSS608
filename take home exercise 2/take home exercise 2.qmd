@@ -38,7 +38,7 @@ For this purpose, we just want to know the difference between different school,i
 
 ## Another misunderstanding
 
-![](picture/EXE5jpg)
+![](picture/EXE5.jpg)
 
 We want to find out that the relationship between Socioeconomic Status and Subjects Score.
 
