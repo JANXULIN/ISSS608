@@ -30,6 +30,7 @@ editor: visual
 Resource:[Student questionnaire](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.oecd.org/pisa/data/2022database/CY8_202111_QST_MS_STQ_CBA_NoNotes.pdf)
 
 ## Import data
+
 ```{r}
 pacman::p_load(ggrepel, patchwork, 
                ggthemes, hrbrthemes,
@@ -41,6 +42,7 @@ stu_qqq_SG <- read_rds("data/stu_qqq_SG.rds")
 ```
 
 ## Calculcate the Average
+
 ```{r}
 stu_qqq_SG_MRS <- stu_qqq_SG %>%
   mutate(AVEMATH = (PV1MATH + PV2MATH + PV3MATH + PV4MATH + PV5MATH + PV6MATH + PV7MATH + PV8MATH + PV9MATH + PV10MATH ) / 10,
@@ -49,6 +51,7 @@ stu_qqq_SG_MRS <- stu_qqq_SG %>%
 ```
 
 # Object 1
+
 ```{r}
 p1 <- ggplot(data=stu_qqq_SG_MRS, 
              aes(x = AVEMATH )) +
@@ -87,10 +90,13 @@ p1 + p2 + p3
 ```
 
 ## Summary:
+
 The mathematics, reading, and science scores conform to a normal distribution. Since we are not analyzing data from other countries, there is no basis for comparison, which means we can only say that this is a set of normal data with no apparent anomalies.
 
 # Object 2
+
 ## Gender
+
 ```{r}
 stu_qqq_SG_MRS_filtered <- stu_qqq_SG_MRS %>%
   filter(ST004D01T == 1 | ST004D01T == 2)
@@ -140,9 +146,11 @@ p4 + p5 + p6
 ```
 
 ## Summary:
-The boxplot reveals only minor differences between females and males. Males perform slightly better than females in mathematics, while females outperform males in reading. In science, the mean scores are nearly identical. 
+
+The boxplot reveals only minor differences between females and males. Males perform slightly better than females in mathematics, while females outperform males in reading. In science, the mean scores are nearly identical.
 
 # Socioeconomic Status
+
 ```{r}
 stu_qqq_SG_ECO1 <- stu_qqq_SG_MRS %>%
   filter(ST250Q01JA == "1", ST250Q02JA == "1", ST253Q01JA == "4", ST006Q01JA =="1" |ST006Q02JA =="1"|ST006Q03JA =="1"|ST006Q04JA =="1"|ST006Q05JA =="1"
@@ -203,11 +211,12 @@ p9 <- ggplot(data = stu_qqq_SG_ECO_combined,
 p7 + p8 + p9
 ```
 
-## Summary: 
+## Summary:
+
 The boxplot shows only marginal differences in Mathematics, Reading, and Science scores between students from lower-income and higher-income families. However, the limitation lies in the data collection method, which may introduce some errors.
 
-
 # Schools
+
 ```{r}
 school_averages <- stu_qqq_SG_MRS %>%
   group_by(CNTSCHID) %>%
@@ -247,7 +256,8 @@ p10 + geom_text(data = school_averages_long %>% group_by(Subject) %>%
   size = 3)
 ```
 
-## Summary: 
+## Summary:
+
 From this chart, it is apparent that math scores are higher than those for reading and science, with reading being the lowest of the three. We can also observe that the schools with IDs 70200003, 70200001, 70200101, 70200044 have relatively high average scores. Meanwhile, the schools with IDs 70200115 and 70200149 have the lowest scores across all three subjects, and it is necessary to investigate the reasons behind this.
 
 ```{r}
@@ -264,4 +274,5 @@ ggplot(school_averages_long, aes(x = CNTSCHID, y = Average_Score, color = Subjec
 ```
 
 ## Summary:
+
 Most schools' scores range between 500 and 700. However, some schools achieve higher scores, such as 70200003 and 70200001, while others, such as 70200115 and 70200149, have lower scores. According to the chart, math scores are significantly better than reading scores.
