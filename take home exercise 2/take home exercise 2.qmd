@@ -45,7 +45,7 @@ We want to find out that the relationship between Socioeconomic Status and Subje
 ```{r}
 pacman::p_load(ggrepel, patchwork, 
                ggthemes, hrbrthemes,
-               tidyverse, haven) 
+               tidyverse, haven)
 ```
 
 ```{r}
