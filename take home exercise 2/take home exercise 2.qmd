@@ -40,7 +40,7 @@ For this purpose, we just want to know the difference between different school,i
 
 ![](picture/EXE5jpg)
 
-We want to find out that the relationship between Socioeconomic Status and Subjects Score. 
+We want to find out that the relationship between Socioeconomic Status and Subjects Score.
 
 ```{r}
 pacman::p_load(ggrepel, patchwork, 
@@ -66,8 +66,8 @@ ggplot(data = stu_qqq_SG_MRS, aes(x = ESCS, y = AVEMATH)) +
   ggtitle("Socioeconomic Status - PISA Index and Maths scores") +
   labs(x = "Socioeconomic Status - PISA Index", y = "Math Score")
 ```
-Convert X to Y, and add a linear regression. 
-From this chart, we can see the positive between socioeconomic status and maths scores.
+
+Convert X to Y, and add a linear regression. From this chart, we can see the positive between socioeconomic status and maths scores.
 
 ```{r}
 ggplot(data=stu_qqq_SG_MRS, 
@@ -80,8 +80,7 @@ ggplot(data=stu_qqq_SG_MRS,
   labs(y = "Socioeconomic Status - PISA Index")
 ```
 
-Convert X to Y, and add a linear regression. 
-From this chart, we can see the positive between socioeconomic status and read scores.
+Convert X to Y, and add a linear regression. From this chart, we can see the positive between socioeconomic status and read scores.
 
 ```{r}
 ggplot(data=stu_qqq_SG_MRS, 
@@ -94,18 +93,8 @@ ggplot(data=stu_qqq_SG_MRS,
   labs(y = "Socioeconomic Status - PISA Index")
 ```
 
-Convert X to Y, and add a linear regression. 
-From this chart, we can see the positive between socioeconomic status and science scores.
+Convert X to Y, and add a linear regression. From this chart, we can see the positive between socioeconomic status and science scores.
 
-# Summary 
+# Summary
+
 The most important thing for me is to correctly understand the meaning of the question and to identify the problem.
-
-
-
-
-
-
-
-
-
-
