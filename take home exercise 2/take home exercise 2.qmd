@@ -18,13 +18,13 @@ I have chosen the homework of "Chai Zhixuan."
 
 His homework is quite well-presented and easy to comprehend. However, to fully understand the assignment, let us read further.
 
-![](take%20home%20exercise%202/picture/EXE1.jpg)
+![](picture/EXE1.jpg)
 
 For this purpose, we need to determine if there are any differences between schools in three subjects in Singapore. Additionally, we should consider whether Socioeconomic Status affects subject scores.
 
 ## One misunderstanding
 
-![](take%20home%20exercise%202/picture/EXE2.jpg)
+![](picture/EXE2.jpg)
 
 This is an incorrect understanding, because in our task, our purpose is to identify the differences between schools to make education more equitable. So, what we need to do is compare all schools in Singapore. Are there any differences between them? If Yes, we need to find out the reasons.
 
