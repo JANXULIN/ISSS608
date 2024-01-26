@@ -14,7 +14,7 @@ editor: visual
 
 This task involves identifying areas for improvement in a classmate's homework. In my understanding, there are two important aspects: one is that the student should clearly understand the assignment; the other is that the homework should be easy to understand and the problem should be clearly identified.
 
-I have chosen the homework of "Chai Zhixuan."
+I have chosen the homework of ["Chai Zhixuan."](https://czx-isss608.netlify.app/take_home_ex/take_home_ex01/take_home_ex01)
 
 His homework is quite well-presented and easy to comprehend. However, to fully understand the assignment, let us read further.
 
