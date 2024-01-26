@@ -97,6 +97,8 @@ ggplot(data=stu_qqq_SG_MRS,
 Convert X to Y, and add a linear regression. 
 From this chart, we can see the positive between socioeconomic status and science scores.
 
+# Summary 
+The most important thing for me is to correctly understand the meaning of the question and to identify the problem.
 
 
 
