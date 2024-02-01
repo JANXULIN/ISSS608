@@ -10,7 +10,8 @@ execute:
 editor: visual
 ---
 
-# Visualising Distribution
+# Visualizing Distribution
+
 ```{r}
 pacman::p_load(ggdist, ggridges, ggthemes,
                colorspace, tidyverse)
@@ -195,6 +196,7 @@ ggplot(exam,
 ```
 
 # Visual Statistical Analysis
+
 ```{r}
 pacman::p_load(ggstatsplot, tidyverse)
 ```
@@ -514,10 +516,3 @@ ggplot(data = exam,
   theme_bw() + 
   transition_states(.draw, 1, 3)
 ```
-
-
-
-
-
-
-
