@@ -435,7 +435,23 @@ bscols(widths = c(4,8),
                                   "Std Dev",
                                   "Std Error")) %>%
          formatRound(columns=c('mean', 'sd', 'se'),
-                     digits=2))
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+digits=2))
 ```
 
 ```{r}
