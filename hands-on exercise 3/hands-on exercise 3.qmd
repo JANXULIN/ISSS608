@@ -15,7 +15,6 @@ pacman::p_load(ggiraph, plotly,
                patchwork, DT, tidyverse) 
 ```
 
-
 ```{r}
 exam_data <- read_csv("data/Exam_data.csv")
 ```
@@ -284,7 +283,6 @@ crosstalk::bscols(gg,
                   widths = 5)        
 ```
 
-
 #2
 
 ```{r}
@@ -386,3 +384,11 @@ bp <- globalPop %>%
   layout(showlegend = FALSE)
 bp
 ```
+
+
+
+
+
+
+
+
