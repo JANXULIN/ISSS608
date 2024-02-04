@@ -134,10 +134,6 @@ pairs(wine[,2:12],
 ```
 
 ```{r}
-update.packages()
-```
-
-```{r}
 grouped_ggcorrmat(
   data = wine,
   cor.vars = 1:11,
@@ -589,9 +585,7 @@ ggplot(data=realis2018_selected,
   geom_treemap_subgroup_border(colour = "gray20")
 ```
 
-```{r}
-install.packages("devtools")
-```
+
 
 ```{r}
 library(devtools)
