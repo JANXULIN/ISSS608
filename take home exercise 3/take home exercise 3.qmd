@@ -1,0 +1,67 @@
+---
+title: "take home exercise 3"
+author: "Xu Lin"
+date: "Feb 11, 2024"
+date-modified: "last-modified"
+execute: 
+  eval: true
+  echo: true
+  warning: false
+editor: visual
+---
+
+# Background 
+ As we know Singapore is situated near the equator and it has a typically tropical climate. It has 2 two monsoon seasons, one is Northeast Monsoon(December to early March); the other is Southwest Monsoon(une to September). In this task, we will choose December to analysis the temperature variation.
+
+# Purpose 
+Daily mean temperatures are projected to increase by 1.4 to 4.6, while annual mean temperatures rose at an average rate of 0.25 per decade.
+We want to find out the reasons. 
+
+```{r}
+pacman::p_load(tidyverse)
+```
+
+```{r}
+Data_1983_12TEM <- read_csv ("data/DAILYDATA_S24_198312.csv")
+Data_1993_12TEM <- read_csv("data/DAILYDATA_S24_199312.csv") 
+Data_2003_12TEM <- read_csv("DAILYDATA_S24_200312.csv") 
+Data_2013_12TEM <- read_csv("DAILYDATA_S24_201312.csv") 
+Data_2023_12TEM <- read_csv("DAILYDATA_S24_202312.csv") 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
