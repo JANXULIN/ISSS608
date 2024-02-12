@@ -53,7 +53,7 @@ ggplot(data = TEMData,
     expand = expansion(add = c(0.2, 2.6))
   ) +
   theme_ridges() +
-  labs(title = "Temperature Distribution by Year",
+  labs(title = "Dec Temperature Distribution by Year",
     y = "Year")
 ```
 
@@ -66,12 +66,105 @@ ggplot(TEMData,
   scale_fill_viridis_c(name = "Tail probability",
                        direction = -1) +
   theme_ridges()+
-  labs(title = "Temperature Distribution by Year",
+  labs(title = "Dec Temperature Distribution by Year",
     y = "Year")
 ```
 
+```{r}
+ggplot(TEMData,
+       aes(x = `Mean Temperature`, y = as.factor(Year),
+           fill = factor(stat(quantile))
+           )) +
+  stat_density_ridges(
+    geom = "density_ridges_gradient",
+    calc_ecdf = TRUE, 
+    quantiles = 4,
+    quantile_lines = TRUE) +
+  scale_fill_viridis_d(name = "Quartiles") +
+  theme_ridges() +
+  labs(title = "Dec Temperature Distribution by Year",
+    y = "Year")
+```
 
+```{r}
+ggplot(TEMData,
+       aes(x = `Mean Temperature`, y = as.factor(Year), 
+           fill = factor(stat(quantile))
+           )) +
+  stat_density_ridges(
+    geom = "density_ridges_gradient",
+    calc_ecdf = TRUE, 
+    quantiles = c(0.025, 0.975)
+    ) +
+  scale_fill_manual(
+    name = "Probability",
+    values = c("#FF0000A0", "#A0A0A0A0", "#0000FFA0"),
+    labels = c("(0, 0.025]", "(0.025, 0.975]", "(0.975, 1]")
+  ) +
+  theme_ridges()+
+  labs(title = "Dec Temperature Distribution by Year",
+    y = "Year")
+```
 
+```{r}
+ggplot(TEMData,
+       aes(x = as.factor(Year), y = `Mean Temperature`)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  labs(title = "Dec Temperature Distribution by Year",
+    x = "Year")
+```
+
+```{r}
+ggplot(TEMData,
+       aes(x = as.factor(Year), y = `Mean Temperature`)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA) +
+  labs(title = "Dec Temperature Distribution by Year",
+    x = "Year")
+```
+
+```{r}
+ggplot(TEMData,
+       aes(x = as.factor(Year), y = `Mean Temperature`)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA) +
+  stat_dots(side = "left", 
+            justification = 1.2, 
+            binwidth = .5,
+            dotsize = 0.1)+
+  labs(title = "Dec Temperature Distribution by Year",
+    x = "Year")
+```
+
+```{r}
+ggplot(TEMData,
+       aes(x = as.factor(Year), y = `Mean Temperature`)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA) +
+  stat_dots(side = "left", 
+            justification = 1.2, 
+            binwidth = .5,
+            dotsize = 0.1) +
+  coord_flip() +
+  theme_economist()+
+  labs(title = "Dec Temperature Distribution by Year",
+    x = "Year")
+```
 
 
 
