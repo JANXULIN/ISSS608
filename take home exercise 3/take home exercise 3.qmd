@@ -10,12 +10,13 @@ execute:
 editor: visual
 ---
 
-# Background 
- As we know Singapore is situated near the equator and it has a typically tropical climate. It has 2 two monsoon seasons, one is Northeast Monsoon(December to early March); the other is Southwest Monsoon(une to September). In this task, we will choose December to analysis the temperature variation.
+# Background
 
-# Purpose 
-Daily mean temperatures are projected to increase by 1.4 to 4.6, while annual mean temperatures rose at an average rate of 0.25 per decade.
-We want to find out the reasons. 
+As we know Singapore is situated near the equator and it has a typically tropical climate. It has 2 two monsoon seasons, one is Northeast Monsoon(December to early March); the other is Southwest Monsoon(une to September). In this task, we will choose December to analysis the temperature variation.
+
+# Purpose
+
+Daily mean temperatures are projected to increase by 1.4 to 4.6, while annual mean temperatures rose at an average rate of 0.25 per decade. We want to find out the reasons.
 
 ```{r}
 pacman::p_load(tidyverse, ggrepel, patchwork, 
@@ -23,8 +24,10 @@ pacman::p_load(tidyverse, ggrepel, patchwork,
                tidyverse, ggdist, ggridges, colorspace)
 ```
 
-# Import data 
+# Import data
+
 I choose the Changi station, December 1983, 1993, 2003, 2013, 2023' temperature data by grouping the data manually. R can not read the degree, so I move it out.
+
 ```{r}
 TEMData <- read_csv("data/DEC1983-2023TEM.csv") 
 ```
@@ -33,7 +36,8 @@ TEMData <- read_csv("data/DEC1983-2023TEM.csv")
 glimpse(TEMData)
 ```
 
-# Data descripition 
+# Data description
+
 Ridgeline plot(also known as Joyplot) is a method to display the distribution of a numeric value for several groups. We use this method to display the December of 1983, 1993, 2003, 2013, 2023's daily mean temperature.
 
 ```{r}
@@ -131,6 +135,13 @@ ggplot(TEMData,
 ```
 
 ```{r}
+TEMData_means <- TEMData %>%
+  group_by(Year) %>%
+  summarise(MeanTemp = mean(`Mean Temperature`, na.rm = TRUE)) %>%
+  ungroup()
+```
+
+```{r}
 ggplot(TEMData,
        aes(x = as.factor(Year), y = `Mean Temperature`)) +
   stat_halfeye(adjust = 0.5,
@@ -144,7 +155,9 @@ ggplot(TEMData,
             binwidth = .5,
             dotsize = 0.1)+
   labs(title = "Dec Temperature Distribution by Year",
-    x = "Year")
+    x = "Year") +
+  geom_text(data = TEMData_means, aes(label = round(MeanTemp, 1), y = MeanTemp), 
+          nudge_x = 0.25, hjust = 0, check_overlap = TRUE)
 ```
 
 ```{r}
@@ -163,61 +176,7 @@ ggplot(TEMData,
   coord_flip() +
   theme_economist()+
   labs(title = "Dec Temperature Distribution by Year",
-    x = "Year")
+    x = "Year") +
+  geom_text(data = TEMData_means, aes(label = round(MeanTemp, 1), y = MeanTemp), 
+          nudge_x = 0.25, hjust = 0, check_overlap = TRUE)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
