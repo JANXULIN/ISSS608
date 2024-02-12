@@ -20,11 +20,11 @@ We want to find out the reasons.
 ```{r}
 pacman::p_load(tidyverse, ggrepel, patchwork, 
                ggthemes, hrbrthemes,
-               tidyverse)
+               tidyverse, ggdist, ggridges, colorspace)
 ```
 
 # Import data 
-I choose the Changi station, December 1983, 1993, 2003, 2013, 2023' temperature data by grouping the data manually.
+I choose the Changi station, December 1983, 1993, 2003, 2013, 2023' temperature data by grouping the data manually. R can not read the degree, so I move it out.
 ```{r}
 TEMData <- read_csv("data/DEC1983-2023TEM.csv") 
 ```
@@ -33,16 +33,42 @@ TEMData <- read_csv("data/DEC1983-2023TEM.csv")
 glimpse(TEMData)
 ```
 
+# Data descripition 
+Ridgeline plot(also known as Joyplot) is a method to display the distribution of a numeric value for several groups. We use this method to display the December of 1983, 1993, 2003, 2013, 2023's daily mean temperature.
+
 ```{r}
 ggplot(data = TEMData, 
-       aes(x = Day, y = `Mean Temperature`, group = Year, color = as.factor(Year))) +
-  geom_line() +
-  labs(color = "Year")
+       aes(x = `Mean Temperature`, y = as.factor(Year), 
+           fill = after_stat(x))) + 
+    geom_density_ridges_gradient(
+    scale = 3,
+    rel_min_height = 0.01) +
+  scale_fill_viridis_c(name = "TEMP",
+                       option = "C") +
+  scale_x_continuous(
+    name = "Mean Temperature",
+    expand = c(0, 0)
+  ) +
+  scale_y_discrete(
+    expand = expansion(add = c(0.2, 2.6))
+  ) +
+  theme_ridges() +
+  labs(title = "Temperature Distribution by Year",
+    y = "Year")
 ```
 
-
-
-
+```{r}
+ggplot(TEMData,
+       aes(x = `Mean Temperature`, y = as.factor(Year), 
+           fill = 0.5 - abs(0.5-stat(ecdf)))) +
+  stat_density_ridges(geom = "density_ridges_gradient", 
+                      calc_ecdf = TRUE) +
+  scale_fill_viridis_c(name = "Tail probability",
+                       direction = -1) +
+  theme_ridges()+
+  labs(title = "Temperature Distribution by Year",
+    y = "Year")
+```
 
 
 
