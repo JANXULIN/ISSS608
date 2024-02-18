@@ -16,17 +16,17 @@ As we know Singapore is situated near the equator and it has a typically tropica
 
 # Purpose
 
-Daily mean temperatures are projected to increase by 1.4 to 4.6, while annual mean temperatures rose at an average rate of 0.25 per decade. We want to find out the reasons.
+Daily mean temperatures are projected to increase by 1.4°C to 4.6°C, while annual mean temperatures rose at an average rate of 0.25°C per decade. We want to find out the reasons.
 
 ```{r}
 pacman::p_load(tidyverse, ggrepel, patchwork, 
                ggthemes, hrbrthemes,
-               tidyverse, ggdist, ggridges, colorspace)
+               tidyverse, ggdist, ggridges, colorspace,gridExtra)
 ```
 
 # Import data
 
-I choose the Changi station, December 1983, 1993, 2003, 2013, 2023' temperature data by grouping the data manually. R can not read the degree, so I move it out.
+I choose the Changi station, December 1983, 1993, 2003, 2013, 2023' temperature data by grouping the data manually. R can not read the degree, so I moved it out.
 
 ```{r}
 TEMData <- read_csv("data/DEC1983-2023TEM.csv") 
@@ -36,7 +36,7 @@ TEMData <- read_csv("data/DEC1983-2023TEM.csv")
 glimpse(TEMData)
 ```
 
-# Data description
+# Data description &  Process of thinking.
 
 Ridgeline plot(also known as Joyplot) is a method to display the distribution of a numeric value for several groups. We use this method to display the December of 1983, 1993, 2003, 2013, 2023's daily mean temperature.
 
@@ -159,10 +159,15 @@ ggplot(TEMData,
   geom_text(data = TEMData_means, aes(label = round(MeanTemp, 1), y = MeanTemp), 
           nudge_x = 0.25, hjust = 0, check_overlap = TRUE)
 ```
+# Final result
+```{r}
+TEMData_max <- aggregate(`Mean Temperature` ~ Year, data = TEMData, max)
+TEMData_min <- aggregate(`Mean Temperature` ~ Year, data = TEMData, min)
+```
 
 ```{r}
-ggplot(TEMData,
-       aes(x = as.factor(Year), y = `Mean Temperature`)) +
+p1 <-ggplot(TEMData, aes(x = as.factor(Year), y = `Mean Temperature`)) +
+  labs(y = "Mean Temperature (°C)", x = "Year") +
   stat_halfeye(adjust = 0.5,
                justification = -0.2,
                .width = 0,
@@ -174,9 +179,59 @@ ggplot(TEMData,
             binwidth = .5,
             dotsize = 0.1) +
   coord_flip() +
-  theme_economist()+
+  theme_economist() +
   labs(title = "Dec Temperature Distribution by Year",
-    x = "Year") +
+       x = "Year") +
   geom_text(data = TEMData_means, aes(label = round(MeanTemp, 1), y = MeanTemp), 
-          nudge_x = 0.25, hjust = 0, check_overlap = TRUE)
+            nudge_x = 0.25, hjust = 0, check_overlap = TRUE) +
+  geom_text(data = TEMData_max, aes(label = `Mean Temperature`, y = `Mean Temperature`),
+            nudge_x = 0.25,nudge_y = -0.25, hjust = 0, check_overlap = TRUE) +  
+  geom_text(data = TEMData_min, aes(label = `Mean Temperature`, y = `Mean Temperature`),
+            nudge_x = 0.25, hjust = 0, check_overlap = TRUE)    
 ```
+
+```{r}
+TEMData_diff <- data.frame(
+  Year = TEMData_max$Year,
+  Diff = TEMData_max$`Mean Temperature` - TEMData_min$`Mean Temperature`
+)
+```
+
+```{r}
+p2 <- ggplot(TEMData_diff, aes(x = as.factor(Year), y = Diff)) +
+  geom_bar(stat = "identity", fill = "grey")+
+  geom_text(aes(label = Diff), position = position_dodge(width = 0.9), hjust = 0.8) +
+  coord_flip() +
+  theme_economist() +
+  labs(x = "", y = "Tem Diff (°C)")
+```
+
+```{r}
+combined_plot <- p1 + p2 + plot_layout(widths =c(3, 1))
+combined_plot
+```
+
+# Summary 
+For this purpose, we want to find out the daily mean temperatures increase by 1.4°C to 4.6°C, while annual mean temperatures rose at an average rate of 0.25°C per decade.
+
+In the chart, you can see the minimal daily mean temperature increase from 25.4°C to 27.3°C from December 1983 to 2023. The trend of minimal daily mean temperature increase from 23°C to 26°C, while the maximal daily mean temperature from 27°C to 28.4°C from the left chart. From the right chart, you can see the daily mean temperature narrow form 4°C to 2.4°C. So we can conclude that the temperature is rising, and the daily temperature range is decreasing, with the rate of change accelerating.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
