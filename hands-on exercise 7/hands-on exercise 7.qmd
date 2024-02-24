@@ -323,7 +323,6 @@ tm_shape(sgpools_sf) +
 tmap_mode("plot")
 ```
 
-
 # Analytical Mapping
 
 ```{r}
@@ -499,12 +498,3 @@ boxmap <- function(vnam, df,
 tmap_mode("plot")
 boxmap("wp_nonfunctional", NGA_wp)
 ```
-
-
-
-
-
-
-
-
-
