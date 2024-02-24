@@ -31,14 +31,14 @@ website:
             href: in-class exercise 3/in-class exercise 3.qmd
           - text: in-class exercise 4
             href: in-class exercise 4/in-class exercise 4.qmd
-          - text: in-class exercise 4
-            href: in-class exercise 4/in-class exercise 4.qmd 
           - text: in-class exercise 5
             href: in-class exercise 5/in-class exercise 5.qmd 
           - text: in-class exercise 6
             href: in-class exercise 6/in-class exercise 6.qmd 
           - text: in-class exercise 7
             href: in-class exercise 7/in-class exercise 7.qmd 
+          - text: in-class exercise 8
+            href: in-class exercise 8/in-class exercise 8.qmd 
       - text: Take-home Exercise 
         menu: 
           - text: take home exercise 1
@@ -49,8 +49,6 @@ website:
             href: take home exercise 3/take home exercise 3.qmd
           - text: take home exercise 4
             href: take home exercise 4/take home exercise 4.qmd
-          - text: take home exercise 4
-            href: take home exercise 4/take home exercise 4.qmd 
 format:
   html:
     theme: cosmo

@@ -1,0 +1,28 @@
+---
+title: "in-class exercise 6"
+author: "Xu Lin"
+date: "February 24, 2024"
+date-modified: "last-modified"
+execute: 
+  eval: true
+  echo: true
+  freeze: true
+  message: false 
+  warning: false
+editor: visual
+---
+
+```{r}
+pacman::p_load(ggHoriPlot, ggthemes, tidyverse)
+```
+
+```{r}
+averp <- read_csv("data/AVERP.csv") %>%
+  mutate(`Date` = dmy(`Date`))
+```
+
+
+
+
+
+
