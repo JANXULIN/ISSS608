@@ -384,11 +384,3 @@ bp <- globalPop %>%
   layout(showlegend = FALSE)
 bp
 ```
-
-
-
-
-
-
-
-

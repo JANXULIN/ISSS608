@@ -183,4 +183,3 @@ rice %>%
                 SubTitle = "1961-1980",
                 Caption = "Prepared by: Dr. Kam Tin Seong")
 ```
-
