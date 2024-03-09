@@ -15,7 +15,7 @@ editor: visual
 
 we want to find out the present rent price in Singapore Market.
 
-#Data preparation：
+# Data preparation：
 The data we download from [SG HDB website](https://www.ura.gov.sg/property-market-information/pmiResidentialRentalSearch).
 ```{r}
 pacman::p_load(sf, tmap, tidyverse, dplyr, readr, plotly, seriation, dendextend, heatmaply)
@@ -45,7 +45,7 @@ postdistrictdata <- read_csv("data/ResidentialRental/realis2018.csv") %>%
   distinct()
 ```
 
-#Data Merge
+# Data Merge
 We use left_join to merge the data, because we want to add "PlanningArea".
 ```{r}
 Retentialdata2024merged <- Retentialdata2024 %>%
@@ -89,7 +89,7 @@ rent2024room1_joined <- rent2024room1 %>%
   left_join(LLNEW, by = c("PlanningArea" = "PlanningArea1"))
 ```
 
-#MAP
+# MAP
 We use the sf package to convert the data to geospatial data. 
 ```{r}
 rent2024room1_joined_sf <- st_as_sf(rent2024room1_joined,
