@@ -1,0 +1,132 @@
+---
+title: "take home exercise 4"
+author: "Xu Lin"
+date: "MAR 9, 2024"
+date-modified: "last-modified"
+execute: 
+  eval: true
+  echo: true
+  message: false
+  warning: false
+editor: visual
+---
+
+# Purpose:
+
+we want to find out the present rent price in Singapore Market.
+
+#Data preparation：
+The data we download from [SG HDB website](https://www.ura.gov.sg/property-market-information/pmiResidentialRentalSearch).
+```{r}
+pacman::p_load(sf, tmap, tidyverse, dplyr, readr, plotly, seriation, dendextend, heatmaply)
+```
+
+```{r}
+Retentialdata <- read_csv("data/ResidentialRental/20241.csv")
+```
+
+we change the variable more easy to read.
+```{r}
+Retentialdata2024 <- Retentialdata %>%
+  select(
+    PostalDistrict = `Postal District`, 
+    NoOfBedroom = `No of Bedroom`, 
+    MonthlyRent = `Monthly Rent ($)`,
+    StreetName  = `Street Name`,
+    ProjectName1 = `Project Name`)
+```
+
+```{r}
+postdistrictdata <- read_csv("data/ResidentialRental/realis2018.csv") %>%
+  select(postalDistrict2 = "Postal District", 
+         PlanningArea = "Planning Area",
+         PlanningRegion = "Planning Region",
+         ProjectName2 = "Project Name") %>%
+  distinct()
+```
+
+#Data Merge
+We use left_join to merge the data, because we want to add "PlanningArea".
+```{r}
+Retentialdata2024merged <- Retentialdata2024 %>%
+  left_join(postdistrictdata, by = c("ProjectName1" = "ProjectName2")) %>%
+  drop_na() %>%
+  mutate(PlanningArea = case_when(
+    PlanningArea == "YISHUN" ~ "Yishun",
+    TRUE ~ PlanningArea 
+  )) 
+```
+
+We want to select the NoOfBedroom 1-4.
+```{r}
+filtered_data <- Retentialdata2024merged %>%
+  filter(NoOfBedroom %in% 1:4) %>%
+  group_by(PlanningArea, NoOfBedroom) %>%
+  summarise(Median_Rent = median(MonthlyRent, na.rm = TRUE)) %>%
+  ungroup()  %>%
+  pivot_wider(names_from = NoOfBedroom, values_from = Median_Rent)
+```
+
+```{r}
+rent2024 <- filtered_data %>%
+  pivot_longer(-PlanningArea, names_to = "NoOfBedroom", values_to = "Median_Rent")
+```
+
+```{r}
+rent2024room1 <- rent2024 %>% filter(NoOfBedroom == 1)
+```
+
+The LLNEW downloads from Tableau, then we change the format that R can read. 
+```{r}
+LLNEW <- read_csv("data/ResidentialRental/LLNEW.csv")%>%
+  select(PlanningArea1 = "Planning Area",
+       Latitude = "Latitude (generated)",
+       Longitude = "Longitude (generated)")
+```
+
+```{r}
+rent2024room1_joined <- rent2024room1 %>%
+  left_join(LLNEW, by = c("PlanningArea" = "PlanningArea1"))
+```
+
+#MAP
+We use the sf package to convert the data to geospatial data. 
+```{r}
+rent2024room1_joined_sf <- st_as_sf(rent2024room1_joined,
+                      coords = c("Longitude",
+                      "Latitude"),
+                      crs = 4326) %>%
+  st_transform(crs = 3414)
+```
+
+We use the mpsz dataset in the mapping function to visualize geographic data.
+```{r}
+mpsz <- st_read(dsn = "data/geospatial", 
+                layer = "MP14_SUBZONE_WEB_PL") %>%
+  st_transform(crs = 3414)
+```
+
+```{r}
+p1<-tmap_options(check.and.fix = TRUE)
+   tmap_mode("view")
+   tm_shape(mpsz) +
+     tm_borders() +
+   tm_shape(rent2024room1_joined_sf) +
+     tm_dots(col= "Median_Rent")
+   tmap_mode("plot")
+```
+
+```{r}
+p2<-ggplot(rent2024, aes(x = PlanningArea, y = NoOfBedroom, fill = Median_Rent)) +
+  geom_tile() + 
+  labs(x = "Planning Area", y = "Number of Bedrooms", fill = "Median Monthly Rent") + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+plotly_p <- ggplotly(p2, tooltip = "fill")
+plotly_p
+```
+
+
+
+
+

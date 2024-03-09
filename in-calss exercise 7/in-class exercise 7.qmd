@@ -1,0 +1,29 @@
+---
+title: "hands-on exercise 7"
+author: "Xu Lin"
+date: "MAR 9, 2024"
+date-modified: "last-modified"
+execute: 
+  eval: true
+  echo: true
+  message: false
+  warning: false
+editor: visual
+---
+
+```{r}
+pacman::p_load(sf,terra,gstat,tmap,viridis,tydyverse)
+```
+
+```{r}
+rfstation <- read.csv("data/aspatial/RainfallStation.csv")
+```
+
+
+
+
+
+
+
+
+
