@@ -45,7 +45,7 @@ postdistrictdata <- read_csv("data/ResidentialRental/realis2018.csv") %>%
   distinct()
 ```
 
-# Data Merge
+# Data Merge:
 We use left_join to merge the data, because we want to add "PlanningArea".
 ```{r}
 Retentialdata2024merged <- Retentialdata2024 %>%
@@ -89,7 +89,7 @@ rent2024room1_joined <- rent2024room1 %>%
   left_join(LLNEW, by = c("PlanningArea" = "PlanningArea1"))
 ```
 
-# MAP
+# MAP:
 We use the sf package to convert the data to geospatial data. 
 ```{r}
 rent2024room1_joined_sf <- st_as_sf(rent2024room1_joined,
