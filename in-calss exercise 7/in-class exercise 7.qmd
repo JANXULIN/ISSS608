@@ -11,13 +11,217 @@ execute:
 editor: visual
 ---
 
+# TEBLEU LINK
+#https://public.tableau.com/app/profile/xu.lin4289/viz/SGMAP_17101663027680/PROPERTYMAP?publish=yes
+
 ```{r}
-pacman::p_load(sf,terra,gstat,tmap,viridis,tydyverse)
+pacman::p_load(sf, terra, gstat, automap,
+               tmap, viridis, tidyverse)
 ```
 
 ```{r}
-rfstation <- read.csv("data/aspatial/RainfallStation.csv")
+rfstation <- read_csv("data/aspatial/RainfallStation.csv")
 ```
+
+```{r}
+rfdata <- read_csv("data/aspatial/DAILYDATA_202402.csv") %>%
+  select(c(1, 5)) %>% 
+  group_by(Station) %>% 
+  summarise(MONTHSUM = sum(`Daily Rainfall Total (mm)`)) %>% 
+  ungroup()
+```
+
+```{r}
+rfdata <- rfdata %>%
+  left_join(rfstation)
+```
+
+```{r}
+rfdata_sf <- st_as_sf(rfdata,
+                      coords = c("Longitude",
+                      "Latitude"),
+                      crs = 4326) %>%
+  st_transform(crs = 3414)
+```
+
+```{r}
+mpsz2019 <- st_read(dsn = "data/geospatial",
+                    layer = "MPSZ-2019") %>%
+st_transform(crs = 3414)
+```
+
+```{r}
+tmap_options(check.and.fix = TRUE)
+tmap_mode("view")
+tm_shape(rfdata_sf) +
+  tm_dots(col = "red")
+```
+
+```{r}
+tmap_options(check.and.fix = TRUE)
+tmap_mode("view")
+tm_shape(mpsz2019) +
+  tm_borders() +
+tm_shape(rfdata_sf) +
+  tm_dots(col= "MONTHSUM")
+tmap_mode("plot")
+```
+
+```{r}
+grid <- terra::rast(mpsz2019,
+                    nrows = 690,
+                    ncols = 1075)
+xy <- terra::xyFromCell(grid,
+                        1:ncell(grid))
+head(xy)
+```
+
+```{r}
+coop <- st_as_sf(as.data.frame(xy), 
+                 coords = c("x", "y"),
+                 crs = st_crs(mpsz2019))
+coop <- st_filter(coop, mpsz2019)
+head(coop)
+```
+
+```{r}
+res <- gstat(formula = MONTHSUM ~ 1, 
+             locations = rfdata_sf, 
+             nmax = 5,
+             set = list(idp = 0))
+```
+
+```{r}
+res <- gstat(formula = MONTHSUM ~ 1, 
+             locations = rfdata_sf, 
+             nmax = 5,
+             set = list(idp = 0))
+```
+
+```{r}
+resp <- predict(res, coop)
+```
+
+```{r}
+resp$x <- st_coordinates(resp)[,1]
+resp$y <- st_coordinates(resp)[,2]
+resp$pred <- resp$var1.pred
+
+pred <- terra::rasterize(resp, grid, 
+                         field = "pred", 
+                         fun = "mean")
+```
+
+```{r}
+tmap_options(check.and.fix = TRUE)
+tmap_mode("plot")
+tm_shape(pred) + 
+  tm_raster(alpha = 0.6, 
+            palette = "viridis")
+```
+
+```{r}
+v <- variogram(MONTHSUM ~ 1, 
+               data = rfdata_sf)
+plot(v)
+```
+
+```{r}
+fv <- fit.variogram(object = v,
+                    model = vgm(
+                      psill = 0.5, 
+                      model = "Sph",
+                      range = 5000, 
+                      nugget = 0.1))
+fv
+```
+
+```{r}
+plot(v, fv)
+```
+
+```{r}
+resp$x <- st_coordinates(resp)[,1]
+resp$y <- st_coordinates(resp)[,2]
+resp$pred <- resp$var1.pred
+resp$pred <- resp$pred
+resp
+```
+
+```{r}
+kpred <- terra::rasterize(resp, grid, 
+                         field = "pred")
+kpred
+```
+
+```{r}
+tmap_options(check.and.fix = TRUE)
+tmap_mode("plot")
+tm_shape(kpred) + 
+  tm_raster(alpha = 0.6, 
+            palette = "viridis",
+            title = "Total monthly rainfall (mm)") +
+  tm_layout(main.title = "Distribution of monthly rainfall, Feb 2024",
+            main.title.position = "center",
+            main.title.size = 1.2,
+            legend.height = 0.45, 
+            legend.width = 0.35,
+            frame = TRUE) +
+  tm_compass(type="8star", size = 2) +
+  tm_scale_bar() +
+  tm_grid(alpha =0.2)
+```
+
+```{r}
+v_auto <- autofitVariogram(MONTHSUM ~ 1, 
+                           rfdata_sf)
+plot(v_auto)
+```
+
+```{r}
+v_auto
+```
+
+```{r}
+k <- gstat(formula = MONTHSUM ~ 1, 
+           model = v_auto$var_model,
+           data = rfdata_sf)
+k
+```
+
+```{r}
+resp <- predict(k, coop)
+```
+
+```{r}
+resp$x <- st_coordinates(resp)[,1]
+resp$y <- st_coordinates(resp)[,2]
+resp$pred <- resp$var1.pred
+resp$pred <- resp$pred
+
+kpred <- terra::rasterize(resp, grid, 
+                         field = "pred")
+```
+
+```{r}
+tmap_options(check.and.fix = TRUE)
+tmap_mode("plot")
+tm_shape(kpred) + 
+  tm_raster(alpha = 0.6, 
+            palette = "viridis",
+            title = "Total monthly rainfall (mm)") +
+  tm_layout(main.title = "Distribution of monthly rainfall, Feb 2024",
+            main.title.position = "center",
+            main.title.size = 1.2,
+            legend.height = 0.45, 
+            legend.width = 0.35,
+            frame = TRUE) +
+  tm_compass(type="8star", size = 2) +
+  tm_scale_bar() +
+  tm_grid(alpha =0.2)
+```
+
+
 
 
 
