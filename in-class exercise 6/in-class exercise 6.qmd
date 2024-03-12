@@ -46,14 +46,3 @@ averp %>%
     scale_x_date(expand=c(0,0), date_breaks = "3 month", date_labels = "%b%y") +
   ggtitle('Average Retail Prices of Selected Consumer Items (Jan 2018 to Dec 2022)')
 ```
-
-
-
-
-
-
-
-
-
-
-
