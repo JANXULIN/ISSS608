@@ -16,7 +16,9 @@ editor: visual
 we want to find out the present rent price in Singapore Market.
 
 # Data preparation：
+
 The data we download from [SG HDB website](https://www.ura.gov.sg/property-market-information/pmiResidentialRentalSearch).
+
 ```{r}
 pacman::p_load(sf, tmap, tidyverse, dplyr, readr, plotly, seriation, dendextend, heatmaply)
 ```
@@ -26,6 +28,7 @@ Retentialdata <- read_csv("data/ResidentialRental/20241.csv")
 ```
 
 we change the variable more easy to read.
+
 ```{r}
 Retentialdata2024 <- Retentialdata %>%
   select(
@@ -46,7 +49,9 @@ postdistrictdata <- read_csv("data/ResidentialRental/realis2018.csv") %>%
 ```
 
 # Data Merge:
+
 We use left_join to merge the data, because we want to add "PlanningArea".
+
 ```{r}
 Retentialdata2024merged <- Retentialdata2024 %>%
   left_join(postdistrictdata, by = c("ProjectName1" = "ProjectName2")) %>%
@@ -58,6 +63,7 @@ Retentialdata2024merged <- Retentialdata2024 %>%
 ```
 
 We want to select the NoOfBedroom 1-4.
+
 ```{r}
 filtered_data <- Retentialdata2024merged %>%
   filter(NoOfBedroom %in% 1:4) %>%
@@ -76,7 +82,8 @@ rent2024 <- filtered_data %>%
 rent2024room1 <- rent2024 %>% filter(NoOfBedroom == 1)
 ```
 
-The LLNEW downloads from Tableau, then we change the format that R can read. 
+The LLNEW downloads from Tableau, then we change the format that R can read.
+
 ```{r}
 LLNEW <- read_csv("data/ResidentialRental/LLNEW.csv")%>%
   select(PlanningArea1 = "Planning Area",
@@ -90,7 +97,9 @@ rent2024room1_joined <- rent2024room1 %>%
 ```
 
 # MAP:
-We use the sf package to convert the data to geospatial data. 
+
+We use the sf package to convert the data to geospatial data.
+
 ```{r}
 rent2024room1_joined_sf <- st_as_sf(rent2024room1_joined,
                       coords = c("Longitude",
@@ -100,12 +109,13 @@ rent2024room1_joined_sf <- st_as_sf(rent2024room1_joined,
 ```
 
 We use the mpsz dataset in the mapping function to visualize geographic data.
+
 ```{r}
 mpsz <- st_read(dsn = "data/geospatial", 
                 layer = "MP14_SUBZONE_WEB_PL") %>%
   st_transform(crs = 3414)
 ```
-
+We divide rooms into 1, 2, 3, and 4 categories, and plot the median values on the SG map, marking the points of planning areas with longitude and latitude (this part of the data comes from importing data from Tableau). Then, we merge the data using left_join and map it onto the map. (In R, we can allow customers to select 1 room, 2 rooms, 3 rooms, or 4 rooms themselves.)
 ```{r}
 p1<-tmap_options(check.and.fix = TRUE)
    tmap_mode("view")
@@ -116,6 +126,7 @@ p1<-tmap_options(check.and.fix = TRUE)
    tmap_mode("plot")
 ```
 
+At the same time, we create a heatmap to  display the median price of each area, allowing customers to better understand the overall area rental market prices in Singapore.
 ```{r}
 p2<-ggplot(rent2024, aes(x = PlanningArea, y = NoOfBedroom, fill = Median_Rent)) +
   geom_tile() + 
@@ -125,8 +136,3 @@ p2<-ggplot(rent2024, aes(x = PlanningArea, y = NoOfBedroom, fill = Median_Rent))
 plotly_p <- ggplotly(p2, tooltip = "fill")
 plotly_p
 ```
-
-
-
-
-
