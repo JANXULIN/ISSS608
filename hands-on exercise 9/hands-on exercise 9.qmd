@@ -1,7 +1,7 @@
 ---
 title: "hands-on exercise 9"
 author: "Xu Lin"
-date: "February 20, 2024"
+date: "MAR 15, 2024"
 date-modified: "last-modified"
 execute: 
   eval: true
@@ -258,12 +258,3 @@ visNetwork(GAStech_nodes,
   visLegend() %>%
   visLayout(randomSeed = 123)
 ```
-
-
-
-
-
-
-
-
-
