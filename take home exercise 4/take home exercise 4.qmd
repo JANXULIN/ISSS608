@@ -92,6 +92,25 @@ LLNEW <- read_csv("data/ResidentialRental/LLNEW.csv")%>%
 ```
 
 ```{r}
+rent2024_joined <- rent2024 %>%
+  filter(NoOfBedroom %in% c("1", "2", "3", "4")) %>%
+  left_join(LLNEW, by = c("PlanningArea" = "PlanningArea1"))
+```
+
+```{r}
+rent_wide <- rent2024_joined %>%
+  pivot_wider(
+    id_cols = c("PlanningArea", "Latitude", "Longitude"),
+    names_from = NoOfBedroom,    
+    values_from = Median_Rent   
+  )
+```
+
+```{r}
+write.csv(rent_wide, "rent2024_wide_format.csv", row.names = FALSE)
+```
+
+```{r}
 rent2024room1_joined <- rent2024room1 %>%
   left_join(LLNEW, by = c("PlanningArea" = "PlanningArea1"))
 ```
@@ -115,7 +134,9 @@ mpsz <- st_read(dsn = "data/geospatial",
                 layer = "MP14_SUBZONE_WEB_PL") %>%
   st_transform(crs = 3414)
 ```
+
 We divide rooms into 1, 2, 3, and 4 categories, and plot the median values on the SG map, marking the points of planning areas with longitude and latitude (this part of the data comes from importing data from Tableau). Then, we merge the data using left_join and map it onto the map. (In R, we can allow customers to select 1 room, 2 rooms, 3 rooms, or 4 rooms themselves.)
+
 ```{r}
 p1<-tmap_options(check.and.fix = TRUE)
    tmap_mode("view")
@@ -126,7 +147,8 @@ p1<-tmap_options(check.and.fix = TRUE)
    tmap_mode("plot")
 ```
 
-At the same time, we create a heatmap to  display the median price of each area, allowing customers to better understand the overall area rental market prices in Singapore.
+At the same time, we create a heatmap to display the median price of each area, allowing customers to better understand the overall area rental market prices in Singapore.
+
 ```{r}
 p2<-ggplot(rent2024, aes(x = PlanningArea, y = NoOfBedroom, fill = Median_Rent)) +
   geom_tile() + 
