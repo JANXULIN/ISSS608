@@ -17,6 +17,9 @@ reactablefmtr, gt, gtExtras, tidyverse)
 
 ```{r}
 library(RODBC)
+```
+
+```{r}
 con <- odbcConnectAccess2007('data/Coffee Chain.mdb')
 coffeechain <- sqlFetch(con, 'CoffeeChain Query')
 write_rds(coffeechain, "data/CoffeeChain.rds")
