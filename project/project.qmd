@@ -1,0 +1,26 @@
+---
+title: "Project"
+author: "Xu Lin"
+---
+
+```{r}
+pacman::p_load(lubridate, ggthemes, reactable,
+reactablefmtr, gt, gtExtras, tidyverse)
+```
+
+```{r}
+rental <- read_csv(data/rent.csv)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
