@@ -20,6 +20,11 @@ coffeechain <- read_rds("data/rds/CoffeeChain.rds")
 ```
 
 ```{r}
+write.csv(coffeechain, "data/CoffeeChain.csv", row.names = FALSE)
+```
+
+
+```{r}
 product <- coffeechain %>%
   group_by(`Product`) %>%
   summarise(`target` = sum(`Budget Sales`),
@@ -315,14 +320,3 @@ reactable(
   )
 )
 ```
-
-
-
-
-
-
-
-
-
-
-
